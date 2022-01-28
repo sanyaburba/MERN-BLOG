@@ -10,8 +10,8 @@ import { useDispatch } from "react-redux";
 
 const App = () => {
   const [currentId, setCurrentId] = useState(null);
-  // const classes = useStyles();
-  // const dispatch = useDispatch();
+  const classes = useStyles();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getPosts());
