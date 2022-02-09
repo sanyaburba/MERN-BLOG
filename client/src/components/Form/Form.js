@@ -14,9 +14,9 @@ import PropTypes from "prop-types";
 
 const Form = ({currentId, setCurrentId}) => {
     const [postData, setPostData] = useState({
-         title: '', message: '', tags: '', selectedFile: ''
+        title: '', message: '', tags: '', selectedFile: ''
     });
-    const post = useSelector((state) => currentId ? state.posts.find((p) => p.id === currentId) : null);
+    const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null);
     const classes = useStyles();
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'));
@@ -27,23 +27,23 @@ const Form = ({currentId, setCurrentId}) => {
 
 
     const clear = useCallback(() => {
-        setCurrentId(null);
+        setCurrentId(0);
         setPostData({title: '', message: '', tags: '', selectedFile: ''});
-    },[setCurrentId]);
+    }, [setCurrentId]);
 
     const handleSubmit = useCallback(async (e) => {
         e.preventDefault();
-        if (currentId === null) {
+        if (currentId === 0) {
             dispatch(createPost({...postData, name: user?.result?.name}));
         } else {
             dispatch(updatePost(currentId, {...postData, name: user?.result?.name}));
         }
         clear();
-    }, [ clear, currentId, dispatch, postData, user?.result?.name]);
+    }, [clear, currentId, dispatch, postData, user?.result?.name]);
 
 
     const onChangeTitle = () => {
-         return event => setPostData({...postData, title: event.target.value});
+        return event => setPostData({...postData, title: event.target.value});
     };
     const onChangeMessage = () => {
         return (event) => setPostData({...postData, message: event.target.value});
@@ -52,10 +52,10 @@ const Form = ({currentId, setCurrentId}) => {
         return (event) => setPostData({...postData, tags: event.target.value.split(',')});
     };
     const onDoneFile = () => {
-        return ({base64}) => setPostData({...postData, selectedFile: base64});
+        return ({base64}) => setPostData({...postData, file: base64});
     };
 
-    if(!user?.result?.name) {
+    if (!user?.result?.name) {
         return (
             <Paper className={classes.paper}>
                 <Typography variant="h6" align="center">
@@ -64,6 +64,7 @@ const Form = ({currentId, setCurrentId}) => {
             </Paper>
         );
     }
+
 
     return (
         <Paper className={classes.paper}>
@@ -78,7 +79,6 @@ const Form = ({currentId, setCurrentId}) => {
                     name="title"
                     variant='outlined'
                     label='title'
-
                     fullWidth value={postData.title}
                     onChange={onChangeTitle()}/>
                 <TextField
@@ -113,11 +113,11 @@ const Form = ({currentId, setCurrentId}) => {
 
 Form.propTypes = {
     setCurrentId: PropTypes.func.isRequired,
-    currentId: PropTypes.string
+    currentId: PropTypes.any
 };
 
 Form.defaultProps = {
-    currentId: PropTypes[null]
+    currentId: PropTypes.number
 };
 
 export default Form;

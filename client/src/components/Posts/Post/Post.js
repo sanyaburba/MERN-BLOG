@@ -2,18 +2,18 @@ import React from 'react';
 import useStyles from './styles';
 import {Button, Card, CardActions, CardContent, CardMedia, Typography} from "@material-ui/core";
 import moment from "moment";
-import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {useDispatch} from "react-redux";
 import {deletePost, likePost} from "../../../Redux/actions/posts";
 import PropTypes from "prop-types";
+import Likes from "../../Likes/Likes";
 
 const Post = ({post, setCurrentId}) => {
 
-
     const classes = useStyles();
     const dispatch = useDispatch();
+    const user = JSON.parse(localStorage.getItem('profile'));
 
     const editButtonClick = () => {
         return () => setCurrentId(post._id);
@@ -23,12 +23,11 @@ const Post = ({post, setCurrentId}) => {
         return () => dispatch(action(post._id));
     };
 
-
     return (
         <Card className={classes.card}>
             <CardMedia
                 className={classes.media}
-                image={post.selectedFile}
+                image={post.file}
                 title={post.title}
                 alt={post.alt}
                 component="div"
@@ -37,6 +36,7 @@ const Post = ({post, setCurrentId}) => {
                 <Typography variant='h6'>{post.name}</Typography>
                 <Typography variant='body2'>{moment(post.createdAt).fromNow()}</Typography>
             </div>
+            {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
             <div className={classes.overlay2}>
                 <Button
                     style={{color: 'white'}}
@@ -45,6 +45,7 @@ const Post = ({post, setCurrentId}) => {
                     <MoreHorizIcon fontSize="medium"/>
                 </Button>
             </div>
+            )}
             <div className={classes.details}>
                 <Typography
                     variant='body2'
@@ -65,18 +66,22 @@ const Post = ({post, setCurrentId}) => {
                 <Button
                     size="small"
                     color="primary"
+                    disabled={!user?.result}
                     onClick={otherButtonClick(likePost)}>
-                    <ThumbUpAltIcon fontSize="small"/>
-                    &nbsp; Like &nbsp;
-                    {post.likes}
+                    <Likes
+                        post={post}
+                        user={user}
+                    />
                 </Button>
-                <Button
-                    size="small"
-                    color="primary"
-                    onClick={otherButtonClick(deletePost)}>
-                    <DeleteIcon fontSize="small"/>
-                    delete
-                </Button>
+                {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
+                    <Button
+                        size="small"
+                        color="primary"
+                        onClick={otherButtonClick(deletePost)}>
+                        <DeleteIcon fontSize="small"/>
+                        delete
+                    </Button>
+                )}
             </CardActions>
         </Card>
     );

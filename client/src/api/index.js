@@ -6,7 +6,6 @@ API.interceptors.request.use((req) => {
     if (localStorage.getItem('profile')) {
         req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;
     }
-
     return req;
 });
 
@@ -16,5 +15,5 @@ export const updatePost = (id, updatedPost) => API.patch(`/posts/${id}`, updated
 export const deletePost = (id) => API.delete(`/posts/${id}`);
 export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
 
-export const login = (formData) => API.post('/user/signin', formData);
-export const registration = (formData) => API.post('/user/signup', formData);
+export const login = (formData) => API.post('/user/login', formData);
+export const registration = (formData) => API.post('/user/registration', formData);

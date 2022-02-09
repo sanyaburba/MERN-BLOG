@@ -12,7 +12,6 @@ const postSchema = mongoose.Schema({
     },
     creator: {
         type: String,
-        required: true
     },
     tags: [String],
     file: String, // convert image to a string with Base64

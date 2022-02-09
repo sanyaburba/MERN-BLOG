@@ -8,8 +8,12 @@ const PasswordInput = ({name, label, handleChange}) => {
     const handleShowPassword = useCallback(() => setShowPassword((prevShowPassword) => !prevShowPassword), []);
 
     return (
-        <Input name={name} label={label} handleChange={handleChange}
-               type={showPassword ? "text" : "password"} handleShowPassword={handleShowPassword}/>
+        <Input
+            name={name}
+            label={label}
+            handleChange={handleChange}
+            type={showPassword ? "text" : "password"}
+            handleShowPassword={handleShowPassword}/>
     );
 };
 

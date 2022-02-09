@@ -58,9 +58,14 @@ const Auth = () => {
         return (
             // eslint-disable-next-line react/display-name
             renderProps => (
-                <Button className={classes.googleButton} color='primary' fullWidth
-                        onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Google/>}
-                        variant="contained">
+                <Button
+                    className={classes.googleButton}
+                    color='primary'
+                    fullWidth
+                    onClick={renderProps.onClick}
+                    disabled={renderProps.disabled}
+                    startIcon={<Google/>}
+                    variant="contained">
                     Sign in via Google
                 </Button>
             )
@@ -68,30 +73,64 @@ const Auth = () => {
     }
 
     return (
-        <Container component="main" maxWidth="xs">
-            <Paper className={classes.paper} elevation={3}>
-                <Avatar className={classes.avatar}>
+        <Container
+            component="main"
+            maxWidth="xs">
+            <Paper
+                className={classes.paper}
+                elevation={3}>
+                <Avatar
+                    className={classes.avatar}>
                     <LockOutlined/>
                 </Avatar>
-                <Typography variant="h5">{isAuth ? 'Sign Up' : 'Sign In'}</Typography>
-                <form className={classes.form} onSubmit={handleSubmit}>
-                    <Grid container spacing={2}>
+                <Typography variant="h5">
+                    {isAuth ? 'Sign Up' : 'Sign In'}
+                </Typography>
+                <form
+                    className={classes.form}
+                    onSubmit={handleSubmit}>
+                    <Grid
+                        container
+                        spacing={2}>
                         {
                             isAuth && (
                                 <>
-                                    <Input name="firstName" label="First Name" handleChange={handleChange} autoFocus
-                                           half/>
-                                    <Input name="lastName" label="Last Name" handleChange={handleChange}
-                                           half/>
+                                    <Input
+                                        name="firstName"
+                                        label="First Name"
+                                        handleChange={handleChange}
+                                        autoFocus
+                                        half/>
+                                    <Input
+                                        name="lastName"
+                                        label="Last Name"
+                                        handleChange={handleChange}
+                                        half/>
                                 </>
                             )
                         }
-                        <Input name="email" label="Email" handleChange={handleChange} type="email"/>
-                        <PasswordInput name="password" label="Password" handleChange={handleChange}/>
+                        <Input
+                            name="email"
+                            label="Email"
+                            handleChange={handleChange}
+                            type="email"/>
+                        <PasswordInput
+                            name="password"
+                            label="Password"
+                            handleChange={handleChange}/>
                         {isAuth &&
-                            <PasswordInput name="confirmPassword" label="Repeat password" handleChange={handleChange}/>}
+                            <PasswordInput
+                                name="confirmPassword"
+                                label="Repeat password"
+                                handleChange={handleChange}/>
+                        }
                     </Grid>
-                    <Button type="submit" fullWidth variant='contained' color="primary" className={classes.submit}>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant='contained'
+                        color="primary"
+                        className={classes.submit}>
                         {isAuth ? 'Sign Up' : 'Sign In'}
                     </Button>
                     <GoogleLogin

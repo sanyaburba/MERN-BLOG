@@ -15,7 +15,6 @@ const store = configureStore({
         auth:authReducer
     }
 });
-window.store = store;
 
 ReactDOM.render(
     <Provider store={store}>

@@ -9,7 +9,6 @@ const checkValidatedID = (_id, res) => {
 export const getPosts = async (req, res) => {
     try {
         const postMessages = await PostMessage.find();
-
         res.status(200).json(postMessages);
     } catch (e) {
         res.status(404).json({message: e.message});
@@ -31,9 +30,6 @@ export const createPost = async (req, res) => {
     const post = req.body; // or const body
     const newPost = new PostMessage({...post, creator: req.userId, createdAt: new Date().toISOString()});
 
-
-    debugger
-
     try {
         await newPost.save();
         res.status(201).json(newPost);
@@ -44,11 +40,11 @@ export const createPost = async (req, res) => {
 
 export const updatePost = async (req, res) => {
     const {id} = req.params;
-    const { title, message, creator, selectedFile, tags } = req.body;
+    const { title, message, file, tags } = req.body;
 
     checkValidatedID(id, res)
-    const updatedPost = { creator, title, message, tags, selectedFile, _id: id };
-     // await PostMessage.findByIdAndUpdate(id, {...post, id}, {new: true});
+    const updatedPost = { title, message, tags, file, _id: id };
+    await PostMessage.findByIdAndUpdate(id, updatedPost, {new: true});
 
     res.json(updatedPost);
 }

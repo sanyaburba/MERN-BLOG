@@ -7,7 +7,6 @@ import {noop} from "../../utils/noop";
 const Input = ({name, half, label, handleChange, autoFocus, type, handleShowPassword}) => {
 
     return (
-
         <Grid item xs={12} sm={half ? 6 : 12}>
             <TextField
                 name={name}
