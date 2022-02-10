@@ -42,7 +42,7 @@ const Navbar = () => {
                     className={classes.heading}
                     variant="h2"
                     align="center">
-                    MERN blog
+                    My Blog
                 </Typography>
                 <img
                     className={classes.image}
