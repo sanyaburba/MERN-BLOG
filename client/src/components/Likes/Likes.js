@@ -2,18 +2,13 @@ import React from 'react';
 import {Favorite, FavoriteBorder} from "@material-ui/icons";
 import PropTypes from 'prop-types';
 
-const styles = {
-
-};
-
 const Likes = ({post, user}) => {
         if (post.likes.length > 0) {
             return post.likes.find((like) => like === (user?.result?.googleId || user?.result?._id))
                 ? (
                     <>
                         <Favorite
-                            fontSize='small'
-                            style={{color:'#ff1556', fontSize: '2rem', cursor: 'pointer'}}
+                           style={{fontSize: '2rem', color: '#ff1455'}}
                         />
                         &nbsp;
                         {post.likes.length > 2 ? `You and ${post.likes.length - 1} others`
@@ -21,15 +16,13 @@ const Likes = ({post, user}) => {
                     </>
                 ) : (
                     <><FavoriteBorder
-                        fontSize="small"
-                        style={{color:'#000000', fontSize: '2rem', cursor: 'pointer'}}
-                    />
+                        style={{fontSize: '2rem', color: '#000'}}/>
                         &nbsp;
                         {post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}
                     </>
                 );
         }
-        return <><FavoriteBorder fontSize='small' style={{color:'#000000', fontSize: '2rem', cursor: 'pointer'}}/> &nbsp;Like</>;
+        return <><FavoriteBorder style={{fontSize: '2rem', color: '#000'}}/> &nbsp;Like</>;
 };
 
 Likes.propTypes = {

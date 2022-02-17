@@ -1,11 +1,10 @@
-import React, {useCallback, useEffect} from 'react';
+import React, { useEffect} from 'react';
 import useStyles from './styles';
 import {CircularProgress, Divider, Paper, Typography} from "@material-ui/core";
 import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
-import {useNavigate, useParams} from "react-router-dom";
+import { useParams} from "react-router-dom";
 import {getPost, getPostsBySearch} from "../../Redux/actions/posts";
-import {FavoriteBorder} from "@material-ui/icons";
 import RecommendedPosts from "./RecommendedPosts";
 
 
@@ -13,7 +12,6 @@ const PostDetails = () => {
 
     const {post, posts, isLoading} = useSelector((state) => state.posts);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const {id} = useParams();
     const classes = useStyles();
 
@@ -21,14 +19,13 @@ const PostDetails = () => {
     
 
     
-    // useEffect(() => {
-    //     if(post){
-    //         dispatch(getPostsBySearch({search: 'none', tags: post?.tags.join(',') }));
-    //     }
-    // }, [post, dispatch]);
+    useEffect(() => {
+        if(post){
+            dispatch(getPostsBySearch({search: 'none', tags: post?.tags.join(',') }));
+        }
+    }, [post, dispatch]);
 
 
-    const openPost = (_id) => navigate(`/posts/${_id}`);
     if(!post) return null;
 
     if(isLoading) {

@@ -1,19 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-
-import reducers from './Redux/reducers';
 
 import App from './App.js';
 import './index.scss';
+import {configureStore} from "@reduxjs/toolkit";
+import authReducer from "./Redux/reducers/auth";
+import {postsReducer} from "./Redux/reducers/posts";
+import {ThemeProvider } from '@mui/material/styles';
+import theme from "./theme";
 
-const store = createStore(reducers, compose(applyMiddleware(thunk)));
+
+const store = configureStore({
+    reducer: {
+        posts:postsReducer,
+        auth:authReducer
+    }
+});
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <ThemeProvider theme={theme}>
+            <App />
+        </ThemeProvider>
+
     </Provider>,
     document.getElementById('root')
 );

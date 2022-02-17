@@ -1,14 +1,14 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {AppBar, Button, Container, Grid, Grow, Paper, TextField} from "@material-ui/core";
 import Posts from "../Posts/Posts";
 import Form from "../Form/Form";
 import useStyles from "./styles";
-import {useDispatch, useSelector} from "react-redux";
-import {getPosts, getPostsBySearch} from "../../Redux/actions/posts";
+import {useDispatch} from "react-redux";
 import Pagination from "../Pagination/Pagination";
 import {useLocation, useNavigate} from "react-router-dom";
 import ChipInput from "material-ui-chip-input";
-import Search from "../Search/Search";
+import {getPostsBySearch} from "../../Redux/actions/posts";
+
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -17,50 +17,35 @@ function useQuery() {
 
 const Home = () => {
     const [currentId, setCurrentId] = useState(0);
-    const [search, setSearch] = useState('');
-    const [tags, setTags] = useState([]);
+    const classes = useStyles();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const query = useQuery();
+    const [search, setSearch] = useState('');
+    const [tags, setTags] = useState([]);
+    // const searchQuery = query.get('searchQuery');
     const page = query.get('page') || 1;
-    const searchQuery = query.get('searchQuery');
 
 
-    // const [searchTerm, setSearchTerm] = useState('');
-
-
-
-
-
-    const classes = useStyles();
-
-    const searchPost = useCallback(() => {
-        if (search.trim() || tags ) {
+    const searchPost = useCallback(() =>{
+        if(search.trim() || tags){
             dispatch(getPostsBySearch({search, tags: tags.join(',') }));
             navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`);
-        } else if (!search && !tags){
-            navigate('/');
         } else {
             navigate('/');
         }
-    }, [dispatch, tags, navigate,search]);
+    }, [dispatch, navigate, search, tags]);
 
-
-    const handleAdd = useCallback((tag) => setTags([...tags, tag]), [tags]);
-    const handleDelete = useCallback((tagToDelete) => setTags(tags.filter((tag) => tag !== tagToDelete)), [tags]);
-    const onChangeSearch = useCallback((e) => {setSearch(e.target.value);}, []);
-
-
-    const updateSearch = useCallback((newSearchTerm) => {
-        setSearch(newSearchTerm);
-
-    }, []);
 
     const handleKeyPress = useCallback((e) => {
         if (e.keyCode === 13) {
             searchPost();
         }
     }, [searchPost]);
+
+    const onChangeSearchField = useCallback((e) => setSearch(e.target.value), [setSearch]);
+    const handleAdd = useCallback((tag) => setTags([...tags, tag]), [tags]);
+    const handleDelete = useCallback((tagToDelete) => setTags(tags.filter((tag)=> tag !== tagToDelete)), [tags]);
 
 
     return (
@@ -82,42 +67,36 @@ const Home = () => {
                             position="static"
                             color="inherit"
                         >
-                            {/*<TextField*/}
-                            {/*    name="search"*/}
-                            {/*    variant="outlined"*/}
-                            {/*    label="Search"*/}
-                            {/*    fullWidth*/}
-                            {/*    value={search}*/}
-                            {/*    onChange={onChangeSearch}*/}
-                            {/*/>*/}
-                            <Search refreshFunction={updateSearch} />
+                            <TextField
+                                variant="outlined"
+                                label="Search"
+                                name="search"
+                                fullWidth
+                                value={search}
+                                onKeyPress={handleKeyPress}
+                                onChange={onChangeSearchField}
+                            />
                             <ChipInput
-                                style={{margin: "10px 0"}}
+                                style={{margin: '10px 0'}}
                                 value={tags}
                                 onAdd={handleAdd}
                                 onDelete={handleDelete}
-                                onKeyPress={handleKeyPress}
-                                label="search tags"
+                                label="Search tags"
                                 variant="outlined"
-                            />
+                                />
                             <Button
                                 onClick={searchPost}
                                 className={classes.searchButton}
                                 color="primary"
                                 variant="contained"
-                            >
+                                >
                                 Search
                             </Button>
                         </AppBar>
-                        <Form
-                            currentId={currentId}
-                            setCurrentId={setCurrentId}
-                        />
-                        {(!searchQuery && !tags.length) && (
-                            <Paper elevation={6} className={classes.pagination}>
-                                <Pagination page={page}/>
-                            </Paper>
-                        )}
+                        <Form currentId={currentId} setCurrentId={setCurrentId}/>
+                        <Paper className={classes.pagination} elevation={6}>
+                            <Pagination page={page}/>
+                        </Paper>
                     </Grid>
                 </Grid>
             </Container>

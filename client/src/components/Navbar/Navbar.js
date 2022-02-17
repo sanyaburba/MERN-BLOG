@@ -36,7 +36,7 @@ const Navbar = () => {
             className={classes.appBar}
             position="static"
             color="inherit">
-            <Link to={'/'} className={classes.brandContainer}>
+            <Link to="/" className={classes.brandContainer}>
                 <img
                     className={classes.image}
                     src={logo}

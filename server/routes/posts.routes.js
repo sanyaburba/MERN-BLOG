@@ -12,9 +12,9 @@ import auth from "../middleware/auth.middleware.js";
 
 const postsRouter = express.Router();
 
+postsRouter.get('/search', getPostsBySearch);
 postsRouter.get('/', getPosts);
 postsRouter.get('/:id', getPost);
-postsRouter.get('/search', getPostsBySearch);
 postsRouter.post('/', auth, createPost);
 postsRouter.patch('/:id', auth, updatePost);
 postsRouter.delete('/:id', auth, deletePost);
