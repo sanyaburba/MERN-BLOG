@@ -8,6 +8,7 @@ import Pagination from "../Pagination/Pagination";
 import {useLocation, useNavigate} from "react-router-dom";
 import ChipInput from "material-ui-chip-input";
 import {getPostsBySearch} from "../../Redux/actions/posts";
+import NewPosts from "../NewStyles/NewPosts/NewPosts";
 
 
 function useQuery() {

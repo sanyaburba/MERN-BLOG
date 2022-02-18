@@ -11,9 +11,6 @@ const RecommendedPosts = ({file, name, likes,title, _id}) => {
 
     const openPost = (_id) => navigate(`/posts/${_id}`);
 
-
-
-
     return (
         <Paper elevation={5} className={classes.recommendations} onClick={()=>openPost(_id)} key={_id} >
             <Typography gutterBottom variant="h6">{title}</Typography>

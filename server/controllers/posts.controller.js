@@ -9,7 +9,7 @@ const checkValidatedID = (_id, res) => {
 export const getPosts = async (req, res) => {
     const {page} = req.query;
     try {
-        const LIMIT = 8;
+        const LIMIT = 6;
         const startIndex = (+page - 1) * LIMIT; // start index of every page
         const total = await PostMessage.countDocuments({});
 

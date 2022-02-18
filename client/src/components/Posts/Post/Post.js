@@ -76,6 +76,7 @@ const Post = ({post, setCurrentId}) => {
                 <Typography
                     variant='body2'
                     color='textSecondary'
+                    style={{height: '150px', overflow: 'hidden'}}
                     component="p">{post.message}</Typography>
             </CardContent>
             <CardActions className={classes.cardActions}>

@@ -1,28 +1,39 @@
 import React from 'react';
 import {Favorite, FavoriteBorder} from "@material-ui/icons";
 import PropTypes from 'prop-types';
+import {Box, Typography} from "@material-ui/core";
+import useStyles from './styles';
 
 const Likes = ({post, user}) => {
+
+    const classes = useStyles();
+
         if (post.likes.length > 0) {
             return post.likes.find((like) => like === (user?.result?.googleId || user?.result?._id))
                 ? (
-                    <>
-                        <Favorite
-                           style={{fontSize: '2rem', color: '#ff1455'}}
-                        />
-                        &nbsp;
-                        {post.likes.length > 2 ? `You and ${post.likes.length - 1} others`
-                        : `${post.likes.length} like${post.likes.length > 1 ? 's' : ''}`}
-                    </>
+                        <Box  className={classes.box}>
+                            <Typography
+                                className={classes.likesCount}
+                                gutterBottom
+                                variant="subtitle2"
+                                component="p">
+                                {`${post.likes.length}`}
+                            </Typography>
+                            <Typography
+                                gutterBottom
+                                component="p">
+                                <Favorite className={classes.favorite}/>
+                            </Typography>
+                        </Box>
                 ) : (
-                    <><FavoriteBorder
-                        style={{fontSize: '2rem', color: '#000'}}/>
+                    <>
+                {post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}
                         &nbsp;
-                        {post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}
-                    </>
+                        <FavoriteBorder/>
+            </>
                 );
         }
-        return <><FavoriteBorder style={{fontSize: '2rem', color: '#000'}}/> &nbsp;Like</>;
+        return <><FavoriteBorder/></>;
 };
 
 Likes.propTypes = {

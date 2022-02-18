@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import useStyles from './styles';
 import {Pagination, PaginationItem} from "@material-ui/lab";
 import {Link} from "react-router-dom";
@@ -15,6 +15,11 @@ const Paginate = ({page}) => {
         if(page) dispatch(getPosts(page));
     },[dispatch, page]);
 
+    const renderIem = useCallback((item) => (
+        <PaginationItem {...item} component={Link} to={`/posts?page=${item.page}`}/>
+    ),[]);
+
+
     const classes = useStyles();
 
     return (
@@ -22,12 +27,9 @@ const Paginate = ({page}) => {
             classes={{ul: classes.ul}}
             count={numberOfPages}
             page={+page || 1}
-            variant="outlined"
             color="primary"
-            renderItem={(item) => (
-                <PaginationItem {...item} component={Link} to={`/posts?page=${item.page}`}/>
-            )}
-        />
+            renderItem={renderIem}
+            />
     );
 };
 

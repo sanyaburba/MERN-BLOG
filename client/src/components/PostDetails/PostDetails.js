@@ -1,9 +1,9 @@
-import React, { useEffect} from 'react';
+import React, {useEffect} from 'react';
 import useStyles from './styles';
 import {CircularProgress, Divider, Paper, Typography} from "@material-ui/core";
 import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
-import { useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {getPost, getPostsBySearch} from "../../Redux/actions/posts";
 import RecommendedPosts from "./RecommendedPosts";
 
@@ -15,29 +15,34 @@ const PostDetails = () => {
     const {id} = useParams();
     const classes = useStyles();
 
-    useEffect(() => {dispatch(getPost(id));}, [dispatch, id]);
-    
-
-    
     useEffect(() => {
-        if(post){
-            dispatch(getPostsBySearch({search: 'none', tags: post?.tags.join(',') }));
+        dispatch(getPost(id));
+    }, [dispatch, id]);
+
+
+    useEffect(() => {
+        if (post) {
+            dispatch(getPostsBySearch({search: 'none', tags: post?.tags.join(',')}));
         }
     }, [post, dispatch]);
 
 
-    if(!post) return null;
+    //TODO change other posts logic, implement back button
 
-    if(isLoading) {
+    if (!post) return null;
+
+    if (isLoading) {
         return <Paper elevation={6} className={classes.loadingPaper}>
-            <CircularProgress size="7em" />
+            <CircularProgress size="7em"/>
         </Paper>;
     }
 
     const recommendedPosts = posts.filter(({_id}) => _id !== post._id);
 
+    // TODO use em instead of px
     return (
-        <Paper style={{padding: '20px', borderRadius: '15px' }} elevation={6}>
+
+        <Paper style={{padding: '0.5em', borderRadius: '15px'}} elevation={6}>
             <div className={classes.card}>
                 <div className={classes.section}>
                     <Typography variant="h3" component="h2">{post.title}</Typography>
@@ -56,31 +61,26 @@ const PostDetails = () => {
                          alt={post.title}/>
                 </div>
             </div>
-            {recommendedPosts.length && (
-                <div className={classes.section}>
+            {recommendedPosts.length && (<div className={classes.section}>
                     <Typography
                         gutterBottom
                         variant="h5"
-                        >
+                    >
                         Check other posts:
                     </Typography>
-                    <Divider />
+                    <Divider/>
                     <div className={classes.recommendedPosts}>
-                        {recommendedPosts.map(({title, message, name, likes, file, _id}) => (
-                            <RecommendedPosts
+                        {recommendedPosts.map(({title, message, name, likes, file, _id}) => (<RecommendedPosts
                                 title={title}
                                 message={message}
                                 name={name}
                                 likes={likes}
                                 file={file}
                                 _id={_id}
-                            />
-                        ))}
+                            />))}
                     </div>
-                </div>
-            )}
-        </Paper>
-    );
+                </div>)}
+        </Paper>);
 };
 
 export default PostDetails;
