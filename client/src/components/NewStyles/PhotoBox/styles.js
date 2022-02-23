@@ -1,10 +1,11 @@
 import {makeStyles} from "@material-ui/core/styles";
+import photoBox from '../../../images/photoBox.jpg';
 
 
 export default makeStyles((theme) => ({
     photoBox: {
-        backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('http://fullhdwallpapers.ru/image/nature/8838/krasivyy-zakat.jpg')`,
-        height: '500px',
+        backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${photoBox})`,
+        height: '10em',
         backgroundPosition: "center",
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',

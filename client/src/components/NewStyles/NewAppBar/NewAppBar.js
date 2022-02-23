@@ -1,7 +1,10 @@
 import * as React from 'react';
+import {useCallback, useEffect, useState} from "react";
+import {useDispatch} from "react-redux";
+import {Link, useLocation, useNavigate} from 'react-router-dom';
+import decode from "jwt-decode";
 import useStyles from "./styles";
-import logo from '../../../images/1logo.png';
-import MenuIcon from '@mui/icons-material/Menu';
+import logo from '../../../images/Logo.svg';
 import {
     AppBar, Avatar,
     Box,
@@ -14,128 +17,101 @@ import {
     Tooltip,
     Typography
 } from "@material-ui/core";
-import {Link} from 'react-router-dom';
+import {LOGOUT} from "../../../constants/actionTypes";
+import SearchInput from "../SearchInput/SearchInput";
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const ResponsiveAppBar = () => {
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
+
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
-    };
+    const logout = useCallback(() => {
+        dispatch({type: LOGOUT});
+        navigate('/');
+        setUser(null);
+    }, [dispatch, navigate]);
 
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
+    useEffect(() => {
+        const token = user?.token;
+        if (token) {
+            const decodedToken = decode(token);
+            if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+        }
+        setUser(JSON.parse(localStorage.getItem('profile')));
+    }, [user?.token, location, logout]);
 
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
+    const handleOpenUserMenu = useCallback((event) => setAnchorElUser(event.currentTarget), []);
+    const handleCloseUserMenu = useCallback(() => setAnchorElUser(null), []);
+
 
     return (
-        <AppBar position="sticky" className={classes.appBar}>
+        <AppBar
+            position="sticky"
+            className={classes.appBar}
+            color='inherit'>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Link to="/" >
+                    <Link to="/" className={classes.logoLink}>
                         <img
                             src={logo}
                             alt="Awesome blog"
-                            height="70"
-                        />
+                            height="80"/>
                     </Link>
-
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                        <IconButton
-                            size="medium"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleOpenNavMenu}
-                            color="inherit"
-                        >
-                            <MenuIcon style={{color: "black"}} />
-                        </IconButton>
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorElNav}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
-                            open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
-                            sx={{
-                                display: { xs: 'block', md: 'none' },
-                            }}
-                        >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography alignCenter>{page}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-                    >
-                        LOGO
-                    </Typography>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
+                    <SearchInput/>
+                    {user ? (
+                        <Box className={classes.userMenu}>
+                            <Typography
+                                variant="h6"
+                                style={{color: '#000'}}>
+                                {user.result.name}
+                            </Typography>
+                            <Tooltip title="Open settings">
+                                <IconButton
+                                    onClick={handleOpenUserMenu}
+                                    sx={{p: 0}}>
+                                    <Avatar
+                                        alt={user.result.name}
+                                        src={user.result.imageUrl}>
+                                        {user.result.name.charAt(0)}
+                                    </Avatar>
+                                </IconButton>
+                            </Tooltip>
+                            <Menu
+                                sx={{mt: '45px'}}
+                                id="menu-appbar"
+                                anchorEl={anchorElUser}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorElUser)}
+                                onClose={handleCloseUserMenu}
                             >
-                                {page}
-                            </Button>
-                        ))}
-                    </Box>
-
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
+                                <MenuItem onClick={handleCloseUserMenu}>
+                                    <Typography onClick={logout}>LOG OUT</Typography>
                                 </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box>
+                            </Menu>
+                        </Box>
+                    ) : (
+                        <Box className={classes.userMenu}>
+                            <Button
+                                component={Link}
+                                to="/auth">
+                                SIGN IN
+                            </Button>
+                        </Box>
+                    )}
                 </Toolbar>
             </Container>
         </AppBar>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box} from "@material-ui/core";
 import useStyles from './styles';
-import logo from "../../../images/logo.png";
+
 import blm from '../../../images/blm.png';
 
 const PhotoBox = () => {
@@ -20,7 +20,6 @@ const PhotoBox = () => {
                     height="200"
                 />
             </Box>
-
         </Box>
     );
 };

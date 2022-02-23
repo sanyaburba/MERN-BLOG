@@ -54,103 +54,88 @@ const Auth = () => {
         return new Error(e.message);
     }, []);
 
-    function renderButton() {
-        return (
-            // eslint-disable-next-line react/display-name
-            renderProps => (
-                <Button
-                    className={classes.googleButton}
-                    color='primary'
-                    fullWidth
-                    onClick={renderProps.onClick}
-                    disabled={renderProps.disabled}
-                    startIcon={<Google/>}
-                    variant="contained">
-                    Sign in via Google
-                </Button>
-            )
-        );
-    }
+    const renderButton = useCallback((renderProps) => {
+        return <Button
+            className={classes.googleButton}
+            fullWidth
+            onClick={renderProps.onClick}
+            disabled={renderProps.disabled}
+            startIcon={<Google/>}
+            variant="contained">
+            Sign in via Google
+        </Button>;
+    }, [classes.googleButton]);
 
-    return (
-        <Container
-            component="main"
-            maxWidth="xs">
-            <Paper
-                className={classes.paper}
-                elevation={3}>
-                <Avatar
-                    className={classes.avatar}>
-                    <LockOutlined/>
-                </Avatar>
-                <Typography variant="h5">
-                    {isAuth ? 'Sign Up' : 'Sign In'}
-                </Typography>
-                <form
-                    className={classes.form}
-                    onSubmit={handleSubmit}>
-                    <Grid
-                        container
-                        spacing={2}>
-                        {
-                            isAuth && (
-                                <>
-                                    <Input
-                                        name="firstName"
-                                        label="First Name"
-                                        handleChange={handleChange}
-                                        autoFocus
-                                        half/>
-                                    <Input
-                                        name="lastName"
-                                        label="Last Name"
-                                        handleChange={handleChange}
-                                        half/>
-                                </>
-                            )
-                        }
+    return (<Container
+        component="main"
+        maxWidth="xs"
+    >
+        <Paper
+            className={classes.paper}
+            elevation={3}>
+            <Avatar className={classes.avatar}>
+                <LockOutlined/>
+            </Avatar>
+            <Typography variant="h5">
+                {isAuth ? 'Sign Up' : 'Sign In'}
+            </Typography>
+            <form
+                className={classes.form}
+                onSubmit={handleSubmit}>
+                <Grid
+                    container
+                    spacing={2}>
+                    {isAuth && (<>
                         <Input
-                            name="email"
-                            label="Email"
+                            name="firstName"
+                            label="First Name"
                             handleChange={handleChange}
-                            type="email"/>
-                        <PasswordInput
-                            name="password"
-                            label="Password"
-                            handleChange={handleChange}/>
-                        {isAuth &&
-                            <PasswordInput
-                                name="confirmPassword"
-                                label="Repeat password"
-                                handleChange={handleChange}/>
-                        }
+                            autoFocus
+                            half/>
+                        <Input
+                            name="lastName"
+                            label="Last Name"
+                            handleChange={handleChange}
+                            half/>
+                    </>)}
+                    <Input
+                        name="email"
+                        label="Email"
+                        handleChange={handleChange}
+                        type="email"/>
+                    <PasswordInput
+                        name="password"
+                        label="Password"
+                        handleChange={handleChange}/>
+                    {isAuth && <PasswordInput
+                        name="confirmPassword"
+                        label="Repeat password"
+                        handleChange={handleChange}/>}
+                </Grid>
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant='contained'
+                    className={classes.submit}>
+                    {isAuth ? 'Sign Up' : 'Sign In'}
+                </Button>
+                <GoogleLogin
+                    clientId="893571297843-ejs2ka06e13f9t3t7nojs6l53i7rfla6.apps.googleusercontent.com"
+                    render={renderButton}
+                    onSuccess={googleSuccess}
+                    onFailure={googleFailure}
+                    cookiePolicy="single_host_origin"
+                />
+                <Grid container justifyContent="flex-end">
+                    <Grid item>
+                        <Button onClick={switchMode}>
+                            {isAuth ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
+                        </Button>
                     </Grid>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant='contained'
-                        color="primary"
-                        className={classes.submit}>
-                        {isAuth ? 'Sign Up' : 'Sign In'}
-                    </Button>
-                    <GoogleLogin
-                        clientId="893571297843-ejs2ka06e13f9t3t7nojs6l53i7rfla6.apps.googleusercontent.com"
-                        render={renderButton()}
-                        onSuccess={googleSuccess}
-                        onFailure={googleFailure}
-                        cookiePolicy="single_host_origin"
-                    />
-                    <Grid container justifyContent="flex-end">
-                        <Grid item>
-                            <Button onClick={switchMode}>
-                                {isAuth ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </form>
-            </Paper>
-        </Container>
-    );
+                </Grid>
+            </form>
+        </Paper>
+    </Container>);
 };
 
 export default Auth;

@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
     paper: {
@@ -15,7 +15,7 @@ export default makeStyles((theme) => ({
     },
     avatar: {
         margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: 'black',
     },
     form: {
         width: '100%',
@@ -27,4 +27,27 @@ export default makeStyles((theme) => ({
     googleButton: {
         marginBottom: theme.spacing(2),
     },
+    input: {
+        '& -underline:after': {
+            borderColor: 'black',
+        },
+
+        '& label.Mui-focused': {
+            color: 'black',
+        },
+        '& .MuiChipInput-underline:after': {
+            borderBottomColor: 'black',
+        },
+        '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+                borderColor: 'violet',
+            },
+            '&:hover fieldset': {
+                borderColor: 'black',
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: 'black',
+            },
+        },
+    }
 }));

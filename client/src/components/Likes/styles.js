@@ -12,6 +12,11 @@ export default makeStyles({
         fontSize: '1.1rem',
     },
     favorite: {
-        color: '#ff1455'
+        color: '#ff1455',
+        cursor: 'pointer'
+    },
+    likeHover: {
+        cursor: 'pointer'
     }
+
 });

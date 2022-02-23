@@ -77,7 +77,6 @@ export const deletePost = async (req, res) => {
     checkValidatedID(id, res)
     await PostMessage.findByIdAndRemove(id);
     res.json({message: 'Post deleted successfully'});
-
 }
 
 export const likePost = async (req, res) => {
