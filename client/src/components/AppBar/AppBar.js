@@ -4,7 +4,7 @@ import {useDispatch} from "react-redux";
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import decode from "jwt-decode";
 import useStyles from "./styles";
-import logo from '../../../images/Logo.svg';
+import logo from '../../images/Logo.svg';
 import {
     AppBar, Avatar,
     Box,
@@ -17,7 +17,7 @@ import {
     Tooltip,
     Typography
 } from "@material-ui/core";
-import {LOGOUT} from "../../../constants/actionTypes";
+import {LOGOUT} from "../../constants/actionTypes";
 import SearchInput from "../SearchInput/SearchInput";
 
 
@@ -96,8 +96,7 @@ const ResponsiveAppBar = () => {
                                     horizontal: 'right',
                                 }}
                                 open={Boolean(anchorElUser)}
-                                onClose={handleCloseUserMenu}
-                            >
+                                onClose={handleCloseUserMenu}>
                                 <MenuItem onClick={handleCloseUserMenu}>
                                     <Typography onClick={logout}>LOG OUT</Typography>
                                 </MenuItem>

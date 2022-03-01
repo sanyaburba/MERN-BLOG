@@ -4,7 +4,7 @@ import useStyles from "./styles";
 import FileBase from "react-file-base64";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import {createPost, updatePost} from "../../../Redux/actions/posts";
+import {createPost, updatePost} from "../../Redux/actions/posts";
 import PropTypes from "prop-types";
 
 const CreateEditPostModal = ({open, onClose, currentId}) => {
@@ -24,10 +24,10 @@ const CreateEditPostModal = ({open, onClose, currentId}) => {
 
     const handleSubmit = useCallback(async (e) => {
         e.preventDefault();
-        if (currentId === 0) {
+        if (currentId === '') {
             dispatch(createPost({...postData, name: user?.result?.name}, navigate));
         } else {
-            dispatch(updatePost(currentId, {...postData, name: user?.result?.name}));
+            dispatch(updatePost(currentId,  {...postData, name: user?.result?.name}, navigate));
         }
         onClose();
     }, [currentId, dispatch, navigate, onClose, postData, user?.result?.name]);
@@ -108,7 +108,7 @@ const CreateEditPostModal = ({open, onClose, currentId}) => {
 CreateEditPostModal.propTypes = {
     open: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
-    currentId: PropTypes.number.isRequired,
+    currentId: PropTypes.string.isRequired,
 };
 
 export default CreateEditPostModal;

@@ -2,7 +2,7 @@ import React from 'react';
 import {Box} from "@material-ui/core";
 import useStyles from './styles';
 
-import blm from '../../../images/blm.png';
+import blm from '../../images/Logo.svg';
 
 const PhotoBox = () => {
 
@@ -11,14 +11,12 @@ const PhotoBox = () => {
     return (
         <Box className={classes.photoBox}>
             <Box>
-                Black Lives Matter
             </Box>
             <Box>
                 <img
                     src={blm}
                     alt="Awesome blog"
-                    height="200"
-                />
+                    height="200"/>
             </Box>
         </Box>
     );

@@ -40,7 +40,7 @@ export default makeStyles((theme) => ({
         },
         '& .MuiOutlinedInput-root': {
             '& fieldset': {
-                borderColor: 'violet',
+                borderColor: 'black',
             },
             '&:hover fieldset': {
                 borderColor: 'black',

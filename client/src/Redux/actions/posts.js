@@ -1,5 +1,6 @@
 import * as api from '../../api';
 import {
+    COMMENT,
     CREATE,
     DELETE,
     END_LOADING,
@@ -11,10 +12,12 @@ import {
 
 //Action Creators
 
-export const getPosts = (page) => async (dispatch) => {
+export const getPosts = () => async (dispatch) => {
     try {
+        // TODO убери
+        const currentPage = localStorage.getItem('currentPage');
         dispatch({type: START_LOADING});
-        const {data} = await api.fetchPosts(page);
+        const {data} = await api.fetchPosts(currentPage);
         dispatch({type: FETCH_ALL, payload: data});
         dispatch({type: END_LOADING});
     } catch (e) {
@@ -83,3 +86,14 @@ export const likePost = (id) => async (dispatch) => {
     }
 };
 
+export const commentPost = (value, id) => async (dispatch) => {
+    try {
+        const {data} = await api.comment(value, id);
+
+        dispatch({type: COMMENT, payload: data});
+
+        return data.comments;
+    } catch (e) {
+        return new Error(e.message);
+    }
+};

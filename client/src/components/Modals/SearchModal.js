@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {Box, Button, Modal, TextField} from "@material-ui/core";
 import ChipInput from "material-ui-chip-input";
 import useStyles from './styles';
-import {getPostsBySearch} from "../../../Redux/actions/posts";
+import {getPostsBySearch} from "../../Redux/actions/posts";
 import PropTypes from "prop-types";
 
 const SearchModal = ({open, closeModal}) => {
@@ -48,16 +48,18 @@ const SearchModal = ({open, closeModal}) => {
                     label="Search"
                     name="search"
                     fullWidth
+                    className={classes.input}
                     value={search}
                     onKeyPress={handleKeyPress}
                     onChange={onChangeSearchField}/>
                 <ChipInput
-                    style={{margin: '10px 0'}}
+                    style={{margin: '0.8em 0'}}
                     value={tags}
                     onAdd={handleAdd}
                     onDelete={handleDelete}
                     label="Search tags"
                     variant="standard"
+                    className={classes.input}
                     fullWidth/>
                 <Button
                     className={classes.buttonSubmit}

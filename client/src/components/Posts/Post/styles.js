@@ -1,52 +1,35 @@
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from "@material-ui/core/styles";
 
-export default makeStyles({
-    media: {
-        height: 0,
-        paddingTop: '56.25%',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        backgroundBlendMode: 'darken',
-    },
-    border: {
-        border: 'solid',
-    },
-    fullHeightCard: {
-        height: '100%',
-    },
+export default makeStyles((theme) => ({
     card: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        borderRadius: '15px',
-        height: '100%',
-        position: 'relative',
+        maxWidth: '100%',
+        height: '32.5em'
     },
-    overlay: {
-        position: 'absolute',
-        top: '20px',
-        left: '20px',
-        color: 'white',
-    },
-    overlay2: {
-        position: 'absolute',
-        top: '20px',
-        right: '20px',
-        color: 'white',
-    },
-    grid: {
-        display: 'flex',
-    },
-    details: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        margin: '20px',
-    },
-    title: {
-        padding: '0 16px',
+    media: {
+        height: 240
     },
     cardActions: {
-        padding: '0 16px 8px 16px',
         display: 'flex',
-        justifyContent: 'space-between',
+        margin: '0 0.5em',
+        justifyContent: 'space-between'
     },
-});
+    author: {
+        display: 'flex'
+    },
+    message: {
+        height: '7.3em',
+        textOverflow: 'ellipsis',
+        overflow: 'hidden'
+    },
+    titleMessage: {
+        height: '1.5em',
+        textOverflow: 'ellipsis',
+        overflow: 'hidden'
+    },
+    tags: {
+        marginBottom: '0.3rem',
+        height: '1.5em',
+        textOverflow: 'ellipsis',
+        overflow: 'hidden'
+    }
+}));

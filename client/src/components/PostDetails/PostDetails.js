@@ -1,14 +1,15 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import useStyles from './styles';
-import {CircularProgress, Divider, IconButton, Paper, Typography} from "@material-ui/core";
-import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
-import {deletePost, getPost, getPosts, getPostsBySearch} from "../../Redux/actions/posts";
+import moment from "moment";
+import {CircularProgress, Divider, IconButton, Paper, Typography} from "@material-ui/core";
+import {deletePost, getPost, getPostsBySearch} from "../../Redux/actions/posts";
 import RecommendedPosts from "./RecommendedPosts";
 import {ArrowBack, DeleteForever, Edit} from "@material-ui/icons";
 import noPostPhoto from '../../images/noPostPhoto.jpg';
-import CreateEditPostModal from "../NewStyles/Modals/CreateEditPostModal";
+import CreateEditPostModal from "../Modals/CreateEditPostModal";
+import Comments from "./Comments";
+import useStyles from './styles';
 
 
 const PostDetails = () => {
@@ -20,7 +21,7 @@ const PostDetails = () => {
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem('profile'));
 
-    const [currId, setCurrId] = useState(0);
+    const [currId, setCurrId] = useState('');
 
     const [open, setOpen] = React.useState(false);
 
@@ -45,14 +46,13 @@ const PostDetails = () => {
 
     useEffect(() => {
         if (post) {
-            dispatch(getPostsBySearch({search: 'ss', tags: post?.tags.join(',')}));
+            dispatch(getPostsBySearch({search: 'a', tags: post?.tags.join(',')}));
         }
     }, [post, dispatch]);
 
 
-    const backButtonClick = useCallback(() => navigate('/posts'), [navigate]);
-
-    //TODO change other posts logic
+    const page = localStorage.getItem('currentPage');
+    const backButtonClick = useCallback(() => navigate(`/posts?page=${page}`), [navigate, page]);
 
     if (!post) return null;
 
@@ -62,7 +62,7 @@ const PostDetails = () => {
         </Paper>;
     }
 
-    const recommendedPosts = posts.filter(({_id}) => _id !== post._id);
+    const recommendedPosts = posts.filter(({_id}) => _id !== post._id).slice(0, 3);
 
 
     // TODO use em instead of px
@@ -117,8 +117,8 @@ const PostDetails = () => {
                     <Typography variant="h6">Created by: {post.name}</Typography>
                     <Typography variant="body1">{moment(post.createdAt).fromNow()}</Typography>
                     <Divider style={{margin: '2em 0'}}/>
-                    <Typography variant="body1"><strong>Comments</strong></Typography>
-                    <Divider style={{margin: '2em 0'}}/>
+                    <Comments post={post} />
+                        <Divider style={{margin: '2em 0'}}/>
                 </div>
                 <div className={classes.imageSection}>
                     <img className={classes.media}
@@ -129,8 +129,7 @@ const PostDetails = () => {
             {recommendedPosts.length && (<div className={classes.section}>
                 <Typography
                     gutterBottom
-                    variant="h5"
-                >
+                    variant="h5">
                     Check other posts:
                 </Typography>
                 <Divider style={{marginBottom: '1em'}}/>
@@ -146,7 +145,8 @@ const PostDetails = () => {
                     />))}
                 </div>
             </div>)}
-        </Paper>);
+        </Paper>
+);
 };
 
 export default PostDetails;

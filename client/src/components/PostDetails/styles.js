@@ -76,4 +76,13 @@ export default makeStyles((theme) => ({
         overflow: 'hidden',
         textAlign: 'center'
     },
+    commentsOuterContainer: {
+        display: 'flex',
+        justifyContent: 'space-between'
+    },
+    commentsInnerContainer: {
+        height: '15em',
+        overflow: 'auto',
+        marginRight: '2em'
+    }
 }));

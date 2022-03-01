@@ -1,5 +1,5 @@
 import {makeStyles} from "@material-ui/core/styles";
-import photoBox from '../../../images/photoBox.jpg';
+import photoBox from '../../images/photoBox.jpg';
 
 
 export default makeStyles((theme) => ({

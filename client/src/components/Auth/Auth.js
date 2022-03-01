@@ -16,6 +16,7 @@ import PasswordInput from "./PasswordInput";
 const initialState = {firstName: '', lastName: '', email: '', password: '', confirmPassword: ''};
 
 const Auth = () => {
+
     const classes = useStyles();
     const [formData, setFormData] = useState(initialState);
     const [isAuth, setIsAuth] = useState(false);
@@ -68,8 +69,7 @@ const Auth = () => {
 
     return (<Container
         component="main"
-        maxWidth="xs"
-    >
+        maxWidth="xs">
         <Paper
             className={classes.paper}
             elevation={3}>
@@ -106,6 +106,7 @@ const Auth = () => {
                     <PasswordInput
                         name="password"
                         label="Password"
+
                         handleChange={handleChange}/>
                     {isAuth && <PasswordInput
                         name="confirmPassword"
@@ -124,8 +125,7 @@ const Auth = () => {
                     render={renderButton}
                     onSuccess={googleSuccess}
                     onFailure={googleFailure}
-                    cookiePolicy="single_host_origin"
-                />
+                    cookiePolicy="single_host_origin"/>
                 <Grid container justifyContent="flex-end">
                     <Grid item>
                         <Button onClick={switchMode}>

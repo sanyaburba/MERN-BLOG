@@ -10,7 +10,10 @@ const Input = ({name, half, label, handleChange, autoFocus, type, handleShowPass
     const classes = useStyles();
 
     return (
-        <Grid item xs={12} sm={half ? 6 : 12}>
+        <Grid
+            item
+            xs={12}
+            sm={half ? 6 : 12}>
             <TextField
                 name={name}
                 onChange={handleChange}
@@ -30,7 +33,6 @@ const Input = ({name, half, label, handleChange, autoFocus, type, handleShowPass
                         </InputAdornment>
                     ),
                 } : null}
-
             />
         </Grid>
     );

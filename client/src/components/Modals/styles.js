@@ -51,6 +51,9 @@ export default makeStyles((theme) => ({
         '& .MuiInput-underline:after': {
             borderBottomColor: 'black',
         },
+        '& .WAMuiChipInput-underline-#:after': {
+            borderBottomColor: 'black',
+        },
         '& .MuiOutlinedInput-root': {
             '& fieldset': {
                 borderColor: 'violet',

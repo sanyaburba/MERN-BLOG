@@ -1,4 +1,5 @@
 import {
+    COMMENT,
     CREATE,
     DELETE,
     END_LOADING,
@@ -30,7 +31,16 @@ export const postsReducer = createReducer({}, {
     [CREATE]: (state, action) => {
         state.posts = [...state, action.payload];
     },
+    [COMMENT]: (state, action) => {
+        state.posts = state.posts.map((post) => {
+            if(post._id === action.payload._id) {
+                return action.payload;
+            }
+            return post;
+        });
+    },
     [UPDATE]: (state, action) => {
+        state.post = action.payload;
         state.posts = state.posts.map((post) => post._id === action.payload._id ? action.payload : post);
     },
     [DELETE]: (state, action) => {

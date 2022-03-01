@@ -38,7 +38,7 @@ const ModalButton = ({currentId}) => {
 };
 
 ModalButton.propTypes = {
-    currentId: PropTypes.number.isRequired
+    currentId: PropTypes.string.isRequired
 };
 
 export default ModalButton;

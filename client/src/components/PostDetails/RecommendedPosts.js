@@ -1,16 +1,19 @@
-import React from 'react';
-import {Avatar, Box, Card, CardActions, CardContent, CardMedia, Paper, Typography} from "@material-ui/core";
+import React, {useCallback} from 'react';
+import {Avatar, Box, Card, CardActions, CardContent, CardMedia, Typography} from "@material-ui/core";
 import {Favorite} from "@material-ui/icons";
 import useStyles from "./styles";
 import {useNavigate} from "react-router-dom";
 import moment from "moment";
+import PropTypes from "prop-types";
+import noPostPhoto from "../../images/noPostPhoto.jpg";
 
-const RecommendedPosts = ({file, name, likes,title, _id, createdAt}) => {
+const RecommendedPosts = ({file, name, likes, title, _id, createdAt}) => {
 
     const classes = useStyles();
     const navigate = useNavigate();
+    
+    const openPost = useCallback(() => navigate(`/posts/${_id}`), [_id, navigate] );
 
-    const openPost = (_id) => navigate(`/posts/${_id}`);
 
     return (
     <Card style={{ width: '20rem', height:'15rem', margin: '1em', flexWrap: 'wrap' }} elevation={6}>
@@ -19,7 +22,7 @@ const RecommendedPosts = ({file, name, likes,title, _id, createdAt}) => {
             alt={name}
             height="100"
             image={file}
-            onClick={()=>openPost(_id)}
+            onClick={openPost}
             style={{cursor: 'pointer'}}
             key={_id}
         />
@@ -66,6 +69,19 @@ const RecommendedPosts = ({file, name, likes,title, _id, createdAt}) => {
         </CardActions>
     </Card>
     );
+};
+
+RecommendedPosts.propTypes = {
+    file: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    likes: PropTypes.array.isRequired,
+    title: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired
+};
+
+RecommendedPosts.defaultProps = {
+    file: noPostPhoto
 };
 
 export default RecommendedPosts;
