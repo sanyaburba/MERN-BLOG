@@ -2,6 +2,7 @@ import React from 'react';
 import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
 import {CircularProgress, Container, Grid} from "@material-ui/core";
+
 import Post from "./Post/Post";
 import useStyles from './styles';
 

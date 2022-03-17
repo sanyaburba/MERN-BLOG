@@ -1,8 +1,7 @@
 import React from 'react';
 import {Box} from "@material-ui/core";
-import useStyles from './styles';
 
-import blm from '../../images/Logo.svg';
+import useStyles from './styles';
 
 const PhotoBox = () => {
 
@@ -11,12 +10,10 @@ const PhotoBox = () => {
     return (
         <Box className={classes.photoBox}>
             <Box>
+                <span className={classes.title}>secret speaker:! blog</span>
             </Box>
             <Box>
-                <img
-                    src={blm}
-                    alt="Awesome blog"
-                    height="200"/>
+
             </Box>
         </Box>
     );

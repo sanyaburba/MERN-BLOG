@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import moment from "moment";
 import PropTypes from "prop-types";
 import {Avatar, Box, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography} from "@material-ui/core";
+
 import Likes from "../../Likes/Likes";
 import noPostPhoto from '../../../images/noPostPhoto.jpg';
 import useStyles from './styles';
@@ -13,6 +14,7 @@ const Post = ({post}) => {
     const navigate = useNavigate();
 
     const user = JSON.parse(localStorage.getItem('profile'));
+
 
     const openPost = useCallback(() => {
         navigate(`/posts/${post._id}`);
@@ -78,7 +80,8 @@ const Post = ({post}) => {
                 <Box>
                     <Likes
                         post={post}
-                        user={user}/>
+                        user={user}
+                    />
                 </Box>
             </CardActions>
         </Card>

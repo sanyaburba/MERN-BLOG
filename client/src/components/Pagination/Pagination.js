@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import {Box} from "@material-ui/core";
 import {Pagination, Stack} from "@mui/material";
 import {PaginationItem} from "@material-ui/lab";
+
 import {getPosts} from "../../Redux/actions/posts";
 import useStyles from './styles';
 

@@ -1,7 +1,8 @@
-import {AUTH, LOGOUT} from "../../constants/actionTypes";
-import { createReducer} from "@reduxjs/toolkit";
+import {createReducer} from "@reduxjs/toolkit";
 
-const authReducer = createReducer({authData:null}, {
+import {AUTH, LOGOUT, MY_ERROR, MY_ERROR_CLEAR} from "../../constants/actionTypes";
+
+const authReducer = createReducer({authData: null}, {
     [AUTH]: (state, action) => {
         localStorage.setItem('profile', JSON.stringify({...action?.data}));
         state.authData = action?.data;
@@ -13,6 +14,12 @@ const authReducer = createReducer({authData:null}, {
         state.authData = null;
         state.loading = false;
         state.errors = null;
+    },
+    [MY_ERROR]: (state, action) => {
+        state.error = action?.payload;
+    },
+    [MY_ERROR_CLEAR]: (state, _) => {
+        state.error = null;
     }
 });
 

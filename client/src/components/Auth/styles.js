@@ -26,28 +26,5 @@ export default makeStyles((theme) => ({
     },
     googleButton: {
         marginBottom: theme.spacing(2),
-    },
-    input: {
-        '& -underline:after': {
-            borderColor: 'black',
-        },
-
-        '& label.Mui-focused': {
-            color: 'black',
-        },
-        '& .MuiChipInput-underline:after': {
-            borderBottomColor: 'black',
-        },
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-                borderColor: 'black',
-            },
-            '&:hover fieldset': {
-                borderColor: 'black',
-            },
-            '&.Mui-focused fieldset': {
-                borderColor: 'black',
-            },
-        },
     }
 }));

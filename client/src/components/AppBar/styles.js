@@ -1,9 +1,10 @@
 import {makeStyles} from "@material-ui/core/styles";
 
-export default makeStyles((theme) => ({
+export default makeStyles({
     appBar: {
         backgroundColor: '#fff',
-        padding: '0.3em 0'
+        padding: '0.5em 0',
+        boxShadow: 'none'
     },
     userMenu: {
         flexGrow: 1,
@@ -12,6 +13,12 @@ export default makeStyles((theme) => ({
         alignItems: 'center'
     },
     logoLink: {
-        marginRight: "1em"
+        marginRight: "1em",
+        textDecoration: 'none'
+    },
+    logoText: {
+        fontWeight: 'bold',
+        fontSize: '3rem',
+        color:'darkblue',
     }
-}));
+});

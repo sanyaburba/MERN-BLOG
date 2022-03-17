@@ -1,10 +1,11 @@
 import React, {useCallback} from 'react';
-import {Favorite, FavoriteBorder} from "@material-ui/icons";
+import {useDispatch} from "react-redux";
 import PropTypes from 'prop-types';
+import {Favorite, FavoriteBorder} from "@material-ui/icons";
 import {Box, Typography} from "@material-ui/core";
+
 import useStyles from './styles';
 import {likePost} from "../../Redux/actions/posts";
-import {useDispatch} from "react-redux";
 
 const Likes = ({post, user}) => {
 
@@ -31,7 +32,7 @@ const Likes = ({post, user}) => {
                         component="p">
                         <Favorite
                             disabled={!user?.result}
-                            onClick={likeButtonClick}
+                            onClick={user?.result && likeButtonClick}
                             className={classes.favorite}/>
                     </Typography>
                 </Box>
@@ -50,7 +51,7 @@ const Likes = ({post, user}) => {
                         <FavoriteBorder
                             className={classes.likeHover}
                             disabled={!user?.result}
-                            onClick={likeButtonClick}/>
+                            onClick={user?.result && likeButtonClick}/>
                     </Typography>
                 </Box>
             );
@@ -59,7 +60,7 @@ const Likes = ({post, user}) => {
         <FavoriteBorder
             className={classes.likeHover}
             disabled={!user?.result}
-            onClick={likeButtonClick}/>
+            onClick={user?.result && likeButtonClick}/>
     </>;
 };
 

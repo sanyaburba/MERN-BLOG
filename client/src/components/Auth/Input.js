@@ -3,11 +3,8 @@ import PropTypes from 'prop-types';
 import {Grid, IconButton, InputAdornment, TextField} from "@material-ui/core";
 import {Visibility, VisibilityOff} from "@material-ui/icons";
 import {noop} from "../../utils/noop";
-import useStyles from "./styles";
 
-const Input = ({name, half, label, handleChange, autoFocus, type, handleShowPassword}) => {
-
-    const classes = useStyles();
+const Input = ({name, half, label, handleChange, autoFocus, type, handleShowPassword, isError}) => {
 
     return (
         <Grid
@@ -20,7 +17,9 @@ const Input = ({name, half, label, handleChange, autoFocus, type, handleShowPass
                 variant="outlined"
                 required
                 fullWidth
-                className={classes.input}
+                error={Boolean(isError)}
+                helperText={isError}
+                color="primary"
                 label={label}
                 autoFocus={autoFocus}
                 type={type}
@@ -37,24 +36,26 @@ const Input = ({name, half, label, handleChange, autoFocus, type, handleShowPass
         </Grid>
     );
 };
-//
-// Input.propTypes = {
-//     name: PropTypes.string.isRequired,
-//     half: PropTypes.bool,
-//     label: PropTypes.string.isRequired,
-//     handleChange: PropTypes.func,
-//     autoFocus: PropTypes.bool,
-//     type: PropTypes.string,
-//     handleShowPassword: PropTypes.func
-// };
-//
-// Input.defaultProps = {
-//     half: false,
-//     handleChange: noop,
-//     autoFocus: false,
-//     handleShowPassword: noop,
-//     type: noop
-// };
+
+Input.propTypes = {
+    name: PropTypes.string.isRequired,
+    half: PropTypes.bool,
+    label: PropTypes.string.isRequired,
+    handleChange: PropTypes.func,
+    autoFocus: PropTypes.bool,
+    type: PropTypes.string,
+    handleShowPassword: PropTypes.func,
+    isError: PropTypes.string
+};
+
+Input.defaultProps = {
+    half: false,
+    handleChange: noop,
+    autoFocus: false,
+    handleShowPassword: noop,
+    type: '',
+    isError: ''
+};
 
 
 export default Input;

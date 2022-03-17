@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from 'react';
+import PropTypes from "prop-types";
 import Input from "./Input";
-import * as propTypes from "prop-types";
 
 const PasswordInput = ({name, label, handleChange}) => {
 
@@ -18,9 +18,10 @@ const PasswordInput = ({name, label, handleChange}) => {
 };
 
 PasswordInput.propTypes = {
-    name: propTypes.string.isRequired,
-    label: propTypes.string.isRequired,
-    handleChange: propTypes.func.isRequired
+    name: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    handleChange: PropTypes.func.isRequired
 };
+
 
 export default PasswordInput;

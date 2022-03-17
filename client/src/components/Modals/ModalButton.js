@@ -1,10 +1,10 @@
 import React, {useCallback} from 'react';
+import PropTypes from "prop-types";
 import {styled} from "@material-ui/styles";
 import {Fab} from "@material-ui/core";
 import AddIcon from "@mui/icons-material/Add";
-import CreateEditPostModal from "./CreateEditPostModal";
-import PropTypes from "prop-types";
 
+import CreateEditPostModal from "./CreateEditPostModal";
 import useStyles from './styles';
 
 const ModalButton = ({currentId}) => {

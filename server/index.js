@@ -6,6 +6,8 @@ import dotenv from 'dotenv';
 
 import postsRouter from './routes/posts.routes.js';
 import userRouter from './routes/user.routes.js';
+import conversationRouter from "./routes/conversations.routes.js";
+import messagesRouter from "./routes/messages.routes.js";
 
 const app = express();
 dotenv.config();
@@ -17,14 +19,15 @@ app.use(cors());
 
 app.use('/posts', postsRouter);
 app.use('/user', userRouter);
+app.use('/conversations', conversationRouter);
+app.use('/messages', messagesRouter);
 
-var mongoDB = 'mongodb://localhost:27017/blog';
+const mongoDB = 'mongodb://localhost:27017/blog';
 
 const PORT = process.env.PORT || 4000;
 
 async function start() {
     try {
-        // await mongoose.connect(process.env.CONNECTION_URL);
         await mongoose.connect(mongoDB);
         app.listen(PORT, () => console.log('Server starting on port ' + PORT));
     } catch (e) {
@@ -33,4 +36,4 @@ async function start() {
     }
 }
 
-start().catch(e=> new Error('Server error: ' + e.message))
+start().catch(e => new Error('Server error: ' + e.message));

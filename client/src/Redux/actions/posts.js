@@ -4,7 +4,7 @@ import {
     CREATE,
     DELETE,
     END_LOADING,
-    FETCH_ALL,
+    FETCH_ALL, FETCH_ALL_POSTS_ADMIN,
     FETCH_BY_SEARCH, FETCH_POST,
     START_LOADING,
     UPDATE
@@ -24,6 +24,18 @@ export const getPosts = () => async (dispatch) => {
         return new Error(e.message);
     }
 };
+
+export const fetchAllPostsForAdmin = () => async (dispatch) => {
+    try {
+        dispatch({type: START_LOADING});
+        const {data} = await api.fetchAllPostsForAdmin();
+        dispatch({type: FETCH_ALL_POSTS_ADMIN, payload: data});
+        dispatch({type: END_LOADING});
+    } catch (e) {
+        return new Error(e.message);
+    }
+};
+
 export const getPost = (id) => async (dispatch) => {
     try {
         dispatch({type: START_LOADING});
@@ -49,7 +61,6 @@ export const createPost = (post, navigate) => async (dispatch) => {
     try {
         dispatch({type: START_LOADING});
         const {data} = await api.createPost(post);
-
         navigate(`/posts/${data._id}`);
         dispatch({type: CREATE, payload: data});
     } catch (e) {
@@ -88,9 +99,11 @@ export const likePost = (id) => async (dispatch) => {
 
 export const commentPost = (value, id) => async (dispatch) => {
     try {
+
         const {data} = await api.comment(value, id);
 
         dispatch({type: COMMENT, payload: data});
+
 
         return data.comments;
     } catch (e) {

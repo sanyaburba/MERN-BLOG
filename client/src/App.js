@@ -4,24 +4,25 @@ import {BrowserRouter, Navigate, Routes, Route} from 'react-router-dom';
 import PostDetails from './components/PostDetails/PostDetails';
 import RedirectAuth from "./components/Auth/RedirectAuth";
 import Home from "./components/Home/Home";
-import theme from "./theme";
-import {ThemeProvider} from "@mui/material/styles";
+import RedirectMessenger from "./components/Messenger/RedirectMessenger";
+import RedirectAdminPage from "./components/AdminPage/RedirectAdminPage";
+import AppBar from "./components/AppBar/AppBar";
 
 
 const App = () => {
 
-
     return (
         <BrowserRouter>
-            <ThemeProvider theme={theme}>
-                <Routes>
-                    <Route path="/" element={<Navigate to="/posts"/>}/>
-                    <Route path="/posts" element={<Home/>}/>
-                    <Route path="/posts/search" element={<Home/>}/>
-                    <Route path="/posts/:id" element={<PostDetails/>}/>
-                    <Route path="/auth" element={<RedirectAuth/>}/>
-                </Routes>
-            </ThemeProvider>
+            <AppBar />
+            <Routes>
+                <Route path="/" element={<Navigate to="/posts"/>}/>
+                <Route path="/posts" element={<Home/>}/>
+                <Route path="/posts/search" element={<Home/>}/>
+                <Route path="/posts/:id" element={<PostDetails/>}/>
+                <Route path="/auth" element={<RedirectAuth/>}/>
+                <Route path="/messenger" element={<RedirectMessenger/>}/>
+                <Route path="/admin" element={<RedirectAdminPage/>}/>
+            </Routes>
         </BrowserRouter>
     );
 };

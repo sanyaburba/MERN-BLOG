@@ -1,11 +1,12 @@
 import React, {useCallback, useState} from 'react';
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import PropTypes from "prop-types";
 import {Box, Button, Modal, TextField} from "@material-ui/core";
 import ChipInput from "material-ui-chip-input";
+
 import useStyles from './styles';
 import {getPostsBySearch} from "../../Redux/actions/posts";
-import PropTypes from "prop-types";
 
 const SearchModal = ({open, closeModal}) => {
 
@@ -44,7 +45,7 @@ const SearchModal = ({open, closeModal}) => {
             aria-describedby="modal-modal-description">
             <Box className={classes.modal}>
                 <TextField
-                    variant="standard"
+                    variant="filled"
                     label="Search"
                     name="search"
                     fullWidth
@@ -58,8 +59,7 @@ const SearchModal = ({open, closeModal}) => {
                     onAdd={handleAdd}
                     onDelete={handleDelete}
                     label="Search tags"
-                    variant="standard"
-                    className={classes.input}
+                    variant="filled"
                     fullWidth/>
                 <Button
                     className={classes.buttonSubmit}

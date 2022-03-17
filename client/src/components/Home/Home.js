@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import NewAppBar from "../AppBar/AppBar";
+
 import PhotoBox from "../PhotoBox/PhotoBox";
 import Posts from "../Posts/Posts";
 import Pagination from "../Pagination/Pagination";
@@ -21,7 +21,7 @@ const Home = () => {
 
     return (
         <>
-            <NewAppBar/>
+            {/*<NewAppBar/>*/}
             <PhotoBox/>
             <Posts setCurrentId={setCurrentId}/>
             {(!searchQuery) && (

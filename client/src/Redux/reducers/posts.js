@@ -3,7 +3,7 @@ import {
     CREATE,
     DELETE,
     END_LOADING,
-    FETCH_ALL,
+    FETCH_ALL, FETCH_ALL_POSTS_ADMIN,
     FETCH_BY_SEARCH, FETCH_POST,
     START_LOADING,
     UPDATE
@@ -22,6 +22,9 @@ export const postsReducer = createReducer({}, {
         state.currentPage = action.payload.currentPage;
         state.numberOfPages = action.payload.numberOfPages;
     },
+    [FETCH_ALL_POSTS_ADMIN]: (state, action) => {
+        state.posts = action.payload.data;
+    },
     [FETCH_BY_SEARCH]: (state, action) => {
         state.posts = action.payload.data;
     },
@@ -33,7 +36,7 @@ export const postsReducer = createReducer({}, {
     },
     [COMMENT]: (state, action) => {
         state.posts = state.posts.map((post) => {
-            if(post._id === action.payload._id) {
+            if (post._id === action.payload._id) {
                 return action.payload;
             }
             return post;
@@ -44,13 +47,6 @@ export const postsReducer = createReducer({}, {
         state.posts = state.posts.map((post) => post._id === action.payload._id ? action.payload : post);
     },
     [DELETE]: (state, action) => {
-       state.posts = state.posts.filter((post) => post._id !== action.payload);
+        state.posts = state.posts.filter((post) => post._id !== action.payload);
     }
 });
-
-
-//! GIT repository
-//TODO fix choose file(choose only png)
-//TODO Required fields ( border another color)
-//TODO loginization, admin and users
-//TODO color scheme ( not required)

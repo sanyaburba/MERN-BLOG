@@ -3,9 +3,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import moment from "moment";
 import {CircularProgress, Divider, IconButton, Paper, Typography} from "@material-ui/core";
+import {ArrowBack, DeleteForever, Edit, Home} from "@material-ui/icons";
+
 import {deletePost, getPost, getPostsBySearch} from "../../Redux/actions/posts";
 import RecommendedPosts from "./RecommendedPosts";
-import {ArrowBack, DeleteForever, Edit} from "@material-ui/icons";
 import noPostPhoto from '../../images/noPostPhoto.jpg';
 import CreateEditPostModal from "../Modals/CreateEditPostModal";
 import Comments from "./Comments";
@@ -20,7 +21,9 @@ const PostDetails = () => {
     const classes = useStyles();
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem('profile'));
+    const admin = user?.result.role === 'ADMIN';
 
+    console.log(post);
     const [currId, setCurrId] = useState('');
 
     const [open, setOpen] = React.useState(false);
@@ -46,13 +49,14 @@ const PostDetails = () => {
 
     useEffect(() => {
         if (post) {
-            dispatch(getPostsBySearch({search: 'a', tags: post?.tags.join(',')}));
+            dispatch(getPostsBySearch({search: 'g', tags: post?.tags.join(',')}));
         }
     }, [post, dispatch]);
 
 
     const page = localStorage.getItem('currentPage');
-    const backButtonClick = useCallback(() => navigate(`/posts?page=${page}`), [navigate, page]);
+    const backButtonClick = useCallback(() => navigate(-1), [navigate]);
+    const homeButtonClick = useCallback(() => navigate(`/posts?page=${page}`), [navigate, page]);
 
     if (!post) return null;
 
@@ -62,10 +66,8 @@ const PostDetails = () => {
         </Paper>;
     }
 
-    const recommendedPosts = posts.filter(({_id}) => _id !== post._id).slice(0, 3);
+    const recommendedPosts = posts?.filter(({_id}) => _id !== post._id).slice(0, 3);
 
-
-    // TODO use em instead of px
     return (
 
         <Paper style={{padding: '0.5em'}}
@@ -76,7 +78,10 @@ const PostDetails = () => {
                         <IconButton onClick={backButtonClick}>
                             <ArrowBack style={{fontSize: 30}}/>
                         </IconButton>
-                        {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
+                        <IconButton onClick={homeButtonClick}>
+                            <Home style={{fontSize: 30}}/>
+                        </IconButton>
+                        {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator || admin) && (
                             <div>
                                 <IconButton
                                     color="primary"
@@ -114,11 +119,17 @@ const PostDetails = () => {
                         component="p">
                         {post.message}
                     </Typography>
-                    <Typography variant="h6">Created by: {post.name}</Typography>
-                    <Typography variant="body1">{moment(post.createdAt).fromNow()}</Typography>
+                    {post.updatedAt && post.updatedAt === post.createdAt ? <>
+                        <Typography variant="h6">Created by: {post.name}</Typography>
+                        <Typography variant="body1">{moment(post.createdAt).fromNow()}</Typography>
+                    </> : <>
+                        <Typography variant="h6">Updated by: {post.name}</Typography>
+                        <Typography variant="body1">{moment(post.updatedAt).fromNow()}</Typography>
+                    </>}
+
                     <Divider style={{margin: '2em 0'}}/>
-                    <Comments post={post} />
-                        <Divider style={{margin: '2em 0'}}/>
+                    <Comments post={post}/>
+                    <Divider style={{margin: '2em 0'}}/>
                 </div>
                 <div className={classes.imageSection}>
                     <img className={classes.media}
@@ -146,7 +157,7 @@ const PostDetails = () => {
                 </div>
             </div>)}
         </Paper>
-);
+    );
 };
 
 export default PostDetails;

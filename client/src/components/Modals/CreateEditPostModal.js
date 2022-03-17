@@ -1,11 +1,14 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Box, Button, Modal, TextField, Typography} from "@material-ui/core";
-import useStyles from "./styles";
-import FileBase from "react-file-base64";
-import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import {createPost, updatePost} from "../../Redux/actions/posts";
+import {useDispatch, useSelector} from "react-redux";
+import {useForm} from "react-hook-form";
+import FileBase from "react-file-base64";
 import PropTypes from "prop-types";
+import {Box, Button, Modal, TextField, Typography} from "@material-ui/core";
+
+import {createPost, updatePost} from "../../Redux/actions/posts";
+import useStyles from "./styles";
+
 
 const CreateEditPostModal = ({open, onClose, currentId}) => {
 
@@ -17,20 +20,20 @@ const CreateEditPostModal = ({open, onClose, currentId}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem('profile'));
+    const {register, handleSubmit, formState: {errors}} = useForm();
 
     useEffect(() => {
         if (post) setPostData(post);
     }, [post]);
 
-    const handleSubmit = useCallback(async (e) => {
-        e.preventDefault();
+    const onSubmit = useCallback(async () => {
         if (currentId === '') {
             dispatch(createPost({...postData, name: user?.result?.name}, navigate));
         } else {
-            dispatch(updatePost(currentId,  {...postData, name: user?.result?.name}, navigate));
+            dispatch(updatePost(currentId, {...postData, name: post?.name}, navigate));
         }
         onClose();
-    }, [currentId, dispatch, navigate, onClose, postData, user?.result?.name]);
+    }, [currentId, dispatch, navigate, onClose, post?.name, postData, user?.result?.name]);
 
 
     const onChangeTitle = useCallback((event) => {
@@ -47,61 +50,67 @@ const CreateEditPostModal = ({open, onClose, currentId}) => {
     }, [postData]);
 
     return (
-        <Modal
-            open={open}
-            onClose={onClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description">
-            <Box className={classes.modal}>
-                <form
-                    autoComplete='off'
-                    noValidate
-                    className={`${classes.root} ${classes.form}`}
-                    onSubmit={handleSubmit}>
-                    <Typography
-                        variant='h6'>{currentId ? 'Editing the post' : 'Creating a post'}
-                    </Typography>
-                    <TextField
-                        name="title"
-                        variant='standard'
-                        label='Title'
-                        required
-                        className={classes.input}
-                        value={postData.title}
-                        onChange={onChangeTitle}/>
-                    <TextField
-                        name="message"
-                        variant='standard'
-                        label='Message'
-                        required
-                        multiline
-                        rows={10}
-                        className={classes.input}
-                        value={postData.message}
-                        onChange={onChangeMessage}/>
-                    <TextField
-                        name="Tags"
-                        variant='standard'
-                        label='Tags'
-                        className={classes.input}
-                        value={postData.tags}
-                        onChange={onChangeTags}/>
-                    <div className={classes.fileInput}>
-                        <FileBase
-                            type='file'
-                            multiple={false}
-                            onDone={onDoneFile}/>
-                    </div>
-                    <Button
-                        className={classes.buttonSubmit}
-                        variant='contained'
-                        size='large'
-                        type='submit'>
-                        submit
-                    </Button>
-                </form>
-            </Box>
-        </Modal>
+
+            <Modal
+                open={open}
+                onClose={onClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description">
+                <Box className={classes.modal}>
+                    <form
+                        autoComplete='off'
+                        noValidate
+                        className={`${classes.root} ${classes.form}`}
+                        onSubmit={handleSubmit(onSubmit)}>
+                        <Typography
+                            variant='h6'>{currentId ? 'Editing the post' : 'Creating a post'}
+                        </Typography>
+                        <TextField
+                            name="title"
+                            variant='filled'
+                            label='Title'
+                            required
+                            {...register('title', {required: 'title is required'})}
+                            error={Boolean(errors.title)}
+                            helperText={errors.title?.message}
+                            value={postData.title}
+                            onChange={onChangeTitle}/>
+                        <TextField
+                            name="message"
+                            variant='filled'
+                            label='Message'
+                            required
+                            {...register('message', {required: 'message is required'})}
+                            error={Boolean(errors.message)}
+                            helperText={errors.message?.message}
+                            multiline
+                            rows={10}
+                            value={postData.message}
+                            onChange={onChangeMessage}/>
+                        <TextField
+                            name="Tags"
+                            variant='filled'
+                            label='Tags'
+                            value={postData.tags}
+                            onChange={onChangeTags}/>
+                        <div className={classes.fileInput}>
+                            <FileBase
+                                type='file'
+                                multiple={false}
+                                onDone={onDoneFile}/>
+                        </div>
+                        {/*<input onChange={onDoneFile} type="file" accept=".jpg, .jpeg, .png" className={classes.inputFile}/>*/}
+                        <Button
+                            className={classes.buttonSubmit}
+                            variant='contained'
+                            size='large'
+                            type='submit'>
+                            submit
+                        </Button>
+                    </form>
+                </Box>
+            </Modal>
+
     );
 };
 

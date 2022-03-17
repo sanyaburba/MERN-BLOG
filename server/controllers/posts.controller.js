@@ -9,7 +9,6 @@ const checkValidatedID = (_id, res) => {
 export const getPosts = async (req, res) => {
     const {page} = req.query;
 
-
     try {
         const LIMIT = 6;
         const startIndex = (+page - 1) * LIMIT; // start index of every page
@@ -23,17 +22,27 @@ export const getPosts = async (req, res) => {
     }
 }
 
+export const fetchAllPostsForAdmin = async (req, res) => {
+    try {
+        const posts = await PostMessage.find().sort({_id: -1});
+        const total = await PostMessage.count();
+
+        res.status(200).json({data: posts, total});
+        console.log(total)
+    } catch (e) {
+        res.status(404).json({message: e.message});
+    }
+
+}
+
 export const getPostsBySearch = async (req, res) => {
     const {searchQuery, tags} = req.query
-    console.log(req.query);
-    debugger;
     try {
         const title = new RegExp(searchQuery, 'i'); //ignore case
 
         const posts = await PostMessage.find({$or: [{title}, {tags: {$in: tags.split(',')}}]});
 
         res.json({data: posts});
-        console.log(posts)
     } catch (e) {
         res.status(404).json({message: e.message})
     }
@@ -65,10 +74,10 @@ export const createPost = async (req, res) => {
 
 export const updatePost = async (req, res) => {
     const {id} = req.params;
-    const {title, likes, message, file, tags} = req.body;
+    const {title, createdAt, name, likes, updatedAt, message, file, tags, comments} = req.body;
 
     checkValidatedID(id, res)
-    const updatedPost = {title, message, likes, tags, file, _id: id};
+    const updatedPost = { comments, title, message, likes, createdAt, updatedAt, name,tags, file, _id: id};
     await PostMessage.findByIdAndUpdate(id, updatedPost, {new: true});
 
     res.json(updatedPost);
@@ -109,8 +118,8 @@ export const commentPost = async (req, res) => {
 
     const post = await PostMessage.findById(id);
 
-    post.comments.push(value);
 
+    post.comments.push(value);
     const updatedPost = await PostMessage.findByIdAndUpdate(id, post, {new: true});
 
     res.json(updatedPost);

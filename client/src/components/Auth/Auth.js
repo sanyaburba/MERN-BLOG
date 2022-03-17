@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from 'react-router-dom';
 import GoogleLogin from "react-google-login";
 import {Avatar, Button, Container, Grid, Paper, Typography} from "@material-ui/core";
@@ -23,8 +23,10 @@ const Auth = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const isError = useSelector((state) =>state.auth.error);
+    // console.log(isError);
 
-    const handleSubmit = useCallback((e) => {
+    const onSubmit = useCallback((e) => {
         e.preventDefault();
         if (isAuth) {
             dispatch(registration(formData, navigate));
@@ -81,7 +83,7 @@ const Auth = () => {
             </Typography>
             <form
                 className={classes.form}
-                onSubmit={handleSubmit}>
+                onSubmit={onSubmit}>
                 <Grid
                     container
                     spacing={2}>
@@ -91,22 +93,24 @@ const Auth = () => {
                             label="First Name"
                             handleChange={handleChange}
                             autoFocus
+                            isError={isError}
                             half/>
                         <Input
                             name="lastName"
                             label="Last Name"
+                            isError={isError}
                             handleChange={handleChange}
                             half/>
                     </>)}
                     <Input
                         name="email"
                         label="Email"
+                        isError={isError}
                         handleChange={handleChange}
                         type="email"/>
                     <PasswordInput
                         name="password"
                         label="Password"
-
                         handleChange={handleChange}/>
                     {isAuth && <PasswordInput
                         name="confirmPassword"
@@ -126,7 +130,9 @@ const Auth = () => {
                     onSuccess={googleSuccess}
                     onFailure={googleFailure}
                     cookiePolicy="single_host_origin"/>
-                <Grid container justifyContent="flex-end">
+                <Grid
+                    container
+                    justifyContent="flex-end">
                     <Grid item>
                         <Button onClick={switchMode}>
                             {isAuth ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}

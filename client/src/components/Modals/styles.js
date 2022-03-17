@@ -8,8 +8,8 @@ export default makeStyles((theme) => ({
         transform: 'translate(-50%, -50%)',
         width: '30em',
         backgroundColor: 'white',
-        border: '0.3em solid #000',
-        borderRadius: '0.3rem',
+        border: '0.2em solid #000',
+        borderRadius: '0.5rem',
         boxShadow: '5em',
         padding: theme.spacing(2),
     },
@@ -28,48 +28,33 @@ export default makeStyles((theme) => ({
     fileInput: {
         width: '97%',
         margin: '1em 0',
-        padding: '0 0.4em'
+        padding: '0 0.4em',
     },
     buttonSubmit: {
         margin: '1em 0',
         width: '9em',
         alignSelf: 'flex-end',
-        '&:hover' : {
+        '&:hover': {
             backgroundColor: '#000',
             color: 'white'
         }
     },
     buttonFile: {
-      padding: '1em',
-      backgroundColor: 'red',
+        padding: '1em',
+        backgroundColor: 'red',
         color: 'red'
-    },
-    input: {
-        '& label.Mui-focused': {
-            color: 'black',
-        },
-        '& .MuiInput-underline:after': {
-            borderBottomColor: 'black',
-        },
-        '& .WAMuiChipInput-underline-#:after': {
-            borderBottomColor: 'black',
-        },
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-                borderColor: 'violet',
-            },
-            '&:hover fieldset': {
-                borderColor: 'black',
-            },
-            '&.Mui-focused fieldset': {
-                borderColor: 'black',
-            },
-        },
     },
     modalButton: {
         position: 'fixed',
         bottom: '4%',
         right: '2%'
+    },
+    inputFile: {
+        fontSize: '16px',
+        fontFamily: 'inherit',
+        padding: '0.25em 0.5em',
+        backgroundColor: '#fff',
+        border: '2px solid',
+        borderRadius: '4px',
     }
-
 }));

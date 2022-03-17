@@ -9,4 +9,10 @@ export const LOGOUT = 'LOGOUT';
 export const COMMENT = 'COMMENT';
 export const FETCH_BY_SEARCH = 'FETCH_BY_SEARCH';
 export const FETCH_POST = 'FETCH_POST';
+export const FETCH_USERS_FOR_ADMIN = 'FETCH_USERS_FOR_ADMIN';
+export const FETCH_ALL_POSTS_ADMIN = 'FETCH_ALL_POSTS_ADMIN';
+export const MY_ERROR_CLEAR = 'MY_ERROR_CLEAR';
+
+
+export const MY_ERROR = 'MY_ERROR';
 

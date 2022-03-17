@@ -20,5 +20,10 @@ export default makeStyles((theme) => ({
             height: 300,
             fontSize: '3em'
         }
+    },
+    title: {
+        fontSize: '4rem',
+        fontWeight: '600',
+        letterSpacing: '0.5rem'
     }
 }));

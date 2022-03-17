@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
     media: {
@@ -83,6 +83,6 @@ export default makeStyles((theme) => ({
     commentsInnerContainer: {
         height: '15em',
         overflow: 'auto',
-        marginRight: '2em'
+        marginBottom: '2em'
     }
 }));

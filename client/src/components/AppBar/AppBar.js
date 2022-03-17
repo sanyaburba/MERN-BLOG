@@ -4,7 +4,6 @@ import {useDispatch} from "react-redux";
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import decode from "jwt-decode";
 import useStyles from "./styles";
-import logo from '../../images/Logo.svg';
 import {
     AppBar, Avatar,
     Box,
@@ -26,6 +25,7 @@ const ResponsiveAppBar = () => {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
 
+    const admin = user?.result.role === 'ADMIN';
     const classes = useStyles();
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -48,6 +48,7 @@ const ResponsiveAppBar = () => {
 
     const handleOpenUserMenu = useCallback((event) => setAnchorElUser(event.currentTarget), []);
     const handleCloseUserMenu = useCallback(() => setAnchorElUser(null), []);
+    const adminPanelNavigate = useCallback(() => navigate('/admin'),[navigate] );
 
 
     return (
@@ -57,11 +58,14 @@ const ResponsiveAppBar = () => {
             color='inherit'>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Link to="/" className={classes.logoLink}>
-                        <img
-                            src={logo}
-                            alt="Awesome blog"
-                            height="80"/>
+                    <Link
+                        to="/"
+                        className={classes.logoLink}>
+                        {/*<img*/}
+                        {/*    src={logo}*/}
+                        {/*    alt="Awesome blog"*/}
+                        {/*    height="80"/>*/}
+                        <span className={classes.logoText}>{admin ? 'secretadmin:!' : 'secretspeaker:!'}</span>
                     </Link>
                     <SearchInput/>
                     {user ? (
@@ -100,6 +104,9 @@ const ResponsiveAppBar = () => {
                                 <MenuItem onClick={handleCloseUserMenu}>
                                     <Typography onClick={logout}>LOG OUT</Typography>
                                 </MenuItem>
+                                {admin &&<MenuItem onClick={handleCloseUserMenu}>
+                                     <Typography onClick={adminPanelNavigate}>ADMIN PANEL</Typography>
+                                </MenuItem>}
                             </Menu>
                         </Box>
                     ) : (
@@ -109,6 +116,7 @@ const ResponsiveAppBar = () => {
                                 to="/auth">
                                 SIGN IN
                             </Button>
+
                         </Box>
                     )}
                 </Toolbar>

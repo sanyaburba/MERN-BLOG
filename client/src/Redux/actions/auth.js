@@ -1,5 +1,5 @@
 import * as api from "../../api/index.js";
-import {AUTH} from "../../constants/actionTypes";
+import {AUTH, MY_ERROR, MY_ERROR_CLEAR} from "../../constants/actionTypes";
 
 export const login = (formData, navigate) => async (dispatch) => {
     try {
@@ -7,7 +7,9 @@ export const login = (formData, navigate) => async (dispatch) => {
         dispatch({type: AUTH, data});
         navigate('/');
     } catch (e) {
-        return new Error(e.message);
+        alert(e.response.data.message);
+        dispatch({type: MY_ERROR, payload: e.response.data.message});
+        setTimeout(() => dispatch({type: MY_ERROR_CLEAR}),10000);
     }
 };
 
@@ -17,6 +19,8 @@ export const registration = (formData, navigate) => async (dispatch) => {
         dispatch({type: AUTH, data});
         navigate('/');
     } catch (e) {
-        return new Error(e.message);
+        alert(e.response.data.message);
+        dispatch({type: MY_ERROR, payload: e.response.data.message});
+        setTimeout(() => dispatch({type: MY_ERROR_CLEAR}),10000);
     }
 };
