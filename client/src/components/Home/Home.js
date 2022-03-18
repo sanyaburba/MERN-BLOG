@@ -15,7 +15,6 @@ const Home = () => {
     const searchQuery = query.get('searchQuery');
 
     const page = query.get('page') || '1';
-    localStorage.setItem('currentPage', page);
     const user = JSON.parse(localStorage.getItem('profile'));
 
 

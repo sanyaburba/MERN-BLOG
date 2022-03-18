@@ -13,17 +13,20 @@ const AdminPosts = ({posts}) => {
         <>
             <span className={classes.totalTitle}>Total posts: {totalPosts}</span>
             {!posts ? <Typography variant='h4'>No posts yet</Typography> :
-                <TransitionGroup>
-                    {posts?.map((post) => (
-                        <CSSTransition
-                            key={post._id}
-                            timeout={500}
-                            classNames="post"
-                        >
-                            <AdminPost post={post}/>
-                        </CSSTransition>
-                    ))}
-                </TransitionGroup>}
+                // <TransitionGroup>
+                    <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around'}}>
+                        {posts?.map((post) => (
+                            // <CSSTransition
+                            //     key={post._id}
+                            //     timeout={500}
+                            //     classNames="post"
+                            // >
+                                <AdminPost key={post._id} post={post}/>
+                        ))}
+                            {/*</CSSTransition>*/}
+                    </div>
+                // </TransitionGroup>
+}
         </>
     );
 };

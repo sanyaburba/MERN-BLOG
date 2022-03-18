@@ -43,20 +43,20 @@ const PostDetails = () => {
 
 
     useEffect(() => {
-        dispatch(getPost(id));
-    }, [dispatch, id]);
+        if (post?._id !== id) {
+            dispatch(getPost(id));
+        }
+    }, [dispatch, id, post]);
 
 
     useEffect(() => {
-        if (post) {
+        if (post?.tags) {
             dispatch(getPostsBySearch({search: 'g', tags: post?.tags.join(',')}));
         }
-    }, [post, dispatch]);
+    }, [post?.tags, dispatch]);
 
 
-    const page = localStorage.getItem('currentPage');
     const backButtonClick = useCallback(() => navigate(-1), [navigate]);
-    const homeButtonClick = useCallback(() => navigate(`/posts?page=${page}`), [navigate, page]);
 
     if (!post) return null;
 
@@ -65,6 +65,8 @@ const PostDetails = () => {
             <CircularProgress size="7em"/>
         </Paper>;
     }
+
+    //TODO loading on post and recomended posts
 
     const recommendedPosts = posts?.filter(({_id}) => _id !== post._id).slice(0, 3);
 
@@ -77,9 +79,6 @@ const PostDetails = () => {
                     <div className={classes.actions}>
                         <IconButton onClick={backButtonClick}>
                             <ArrowBack style={{fontSize: 30}}/>
-                        </IconButton>
-                        <IconButton onClick={homeButtonClick}>
-                            <Home style={{fontSize: 30}}/>
                         </IconButton>
                         {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator || admin) && (
                             <div>

@@ -11,6 +11,7 @@ const AdminUsers = ({users}) => {
     return (
         <>
             <span className={classes.totalTitle}>Total users: {totalUsers}</span>
+            {/*<div style={{display: 'flex', flexWrap: 'wrap'}}>*/}
             {users?.map((user) => <CSSTransition
                 key={user._id}
                 timeout={500}
@@ -18,6 +19,7 @@ const AdminUsers = ({users}) => {
             >
                 <AdminUser user={user}/>
             </CSSTransition>)}
+            {/*</div>*/}
         </>
     );
 };

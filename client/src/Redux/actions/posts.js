@@ -14,10 +14,8 @@ import {
 
 export const getPosts = () => async (dispatch) => {
     try {
-        // TODO убери
-        const currentPage = localStorage.getItem('currentPage');
         dispatch({type: START_LOADING});
-        const {data} = await api.fetchPosts(currentPage);
+        const {data} = await api.fetchPosts();
         dispatch({type: FETCH_ALL, payload: data});
         dispatch({type: END_LOADING});
     } catch (e) {

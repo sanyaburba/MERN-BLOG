@@ -12,10 +12,12 @@ export default makeStyles( {
         marginTop: '25rem'
     },
     sideBarMenu: {
-        backgroundColor: 'rgb(251,251,255)'
+        backgroundColor: 'rgb(251,251,255)',
+        position: 'sticky'
     },
     sideBarBox: {
         width: '100%',
+        height: '91vh',
         padding: '2em'
     },
     sideBarTitle: {
@@ -46,6 +48,30 @@ export default makeStyles( {
         fontSize: '2.5rem',
         color: 'darkblue',
         fontWeight: '600'
+    },
+    userAvatar: {
+        border: '0.3rem solid #58ebdf',
+        marginRight: '2rem',
+    },
+    adminAvatar: {
+        border: '0.3rem solid #e33d91',
+        marginRight: '2rem',
+    },
+    userRole: {
+        margin: '0 0.5rem',
+        fontWeight: 'bold',
+        color: '#58ebdf',
+        alignItems: 'center'
+    },
+    adminRole: {
+        margin: '0 0.5rem',
+        fontWeight: 'bold',
+        color: '#e33d91',
+        alignItems: 'center'
+    },
+    dashboardContainer: {
+        position: 'fixed',
+        width: '17%'
     }
 
 });

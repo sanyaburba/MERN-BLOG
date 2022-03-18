@@ -45,7 +45,7 @@ export const registration = async (req, res) => {
 
 export const fetchUsers = async (req, res) => {
     try {
-        const users = await User.find().sort({_id: -1});
+        const users = await User.find().sort({email: 1});
         res.status(200).json(users)
     } catch (e) {
         res.status(500).json({message: "Something went wrong"});
